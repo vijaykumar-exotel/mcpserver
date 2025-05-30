@@ -1,6 +1,7 @@
 from mcp import ClientSession
 from mcp.client.sse import sse_client
-
+import asyncio
+    
 
 async def run():
     async with sse_client(url="http://localhost:8000/sse") as streams:
@@ -14,7 +15,7 @@ async def run():
 
             # Call a tool
             result = await session.call_tool("add", arguments={"a": 4, "b": 5})
-            print(result.content[0].text)
+            toolop = result.content[0].text
 
             # List available resources
             resources = await session.list_resources()
@@ -42,9 +43,9 @@ async def run():
                 "debug_error", arguments={"error": "SyntaxError: invalid syntax"}
             )
             print("prompt", prompt)
+            return toolop
 
 
-if __name__ == "__main__":
-    import asyncio
+async def execute():
+    return await run()
 
-    asyncio.run(run())
