@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 
 
     # This is the default and can be omitted
-#api_key="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"
+api_key="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"
 
 mcp_client_config = config.MCPClientConfig(
     mcpServers={
@@ -40,7 +40,7 @@ async def getclient():
     try:
         yield client
     finally:
-        print("mcp connection closed")
+        await client.cleanup()
   
 
 async def execute():
@@ -49,7 +49,7 @@ async def execute():
   
     # messages_in are coming from user interacting with the LLM
     # e.g. UI making use of this MCP client.
-    messages_in = [{"role": "user", "content": "What’s the current status?"}]
+    messages_in = [{"role": "user", "content": "add two number 2,5?"}]
     print("printing message", messages_in)
 
 

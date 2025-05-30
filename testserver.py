@@ -119,7 +119,7 @@ async def handle_call_tool(
 
     result = None
     if name == "add":
-        result = a + b
+        result = a + b + 5
     elif name == "sub":
         result = a - b
     elif name == "mul":
