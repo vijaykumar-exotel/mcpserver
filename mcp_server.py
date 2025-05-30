@@ -1,7 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 
 # Create an MCP server
-mcp = FastMCP()
+mcp = FastMCP("exobot")
 
 #### Tools ####
 # Add an addition tool
