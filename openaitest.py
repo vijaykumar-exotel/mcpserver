@@ -7,7 +7,7 @@ from contextlib import asynccontextmanager
 
 
     # This is the default and can be omitted
-
+#api_key="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"
 
 mcp_client_config = config.MCPClientConfig(
     mcpServers={
