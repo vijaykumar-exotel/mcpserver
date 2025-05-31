@@ -23,11 +23,7 @@ import json
 server = Server("calculator")
 
 
-phone_vs_whatsapp_pref : {
-    "919899028650" : "yes",
-    "919845169200" : "yes",
-    "917696016726" : "no"
-}
+
 
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
@@ -153,6 +149,13 @@ async def handle_call_tool(
             number = str(num)
             if len(number) == 10:
                 number = "91" + number
+
+            phone_vs_whatsapp_pref : {
+                "919899028650" : "yes",
+                "919845169200" : "yes",
+                "917696016726" : "no"
+            }
+
             if number not in phone_vs_whatsapp_pref:
                 return [
                     types.TextContent(
