@@ -200,8 +200,8 @@ async def handle_call_tool(
    
         
     elif name == "fetch_lead_from_crm":
-         return [types.TextContent(type="text", text=f"name:vijay,number:+919899028650|name:vivek,number:+917696016726|name:maru,number:+919845169200
-")]
+         return [types.TextContent(type="text", 
+         text=f"name:vijay,number:+919899028650|name:vivek,number:+917696016726|name:maru,number:+919845169200")]
     else:
         raise ValueError(f"Unknown tool: {name}")
 
