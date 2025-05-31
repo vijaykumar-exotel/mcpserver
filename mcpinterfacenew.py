@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 import openaitest
 app = FastAPI()
+from fastapi.middleware.cors import CORSMiddleware
 
 app.add_middleware(
     CORSMiddleware,
