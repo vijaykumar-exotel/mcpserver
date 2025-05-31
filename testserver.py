@@ -64,21 +64,46 @@ async def handle_list_tools() -> list[types.Tool]:
             },
         ),
         types.Tool(
-            name="div",
-            description="Divide first number by second number (/)",
+            name="send_whatsapp_message",
+            description="Send Whatsapp Message on E164 format (number)",
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "a": {
+                    "number": {
                         "type": "number",
-                        "description": "First number (dividend)",
+                        "description": "E164 Number",
                     },
-                    "b": {
+                    
+                },
+                "required": ["number"],
+            },
+        ),
+        types.Tool(
+            name="greeting",
+            description="Greeting myself",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                },
+                "required": [],
+            },
+        ),
+        types.Tool(
+            name="add_name_and_number_to_lead",
+            description="Add name and number to lead list",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "name",
+                        "description": "Name",
+                    },
+                    "number": {
                         "type": "number",
-                        "description": "Second number (divisor)",
+                        "description": "E164 Number",
                     },
                 },
-                "required": ["a", "b"],
+                "required": ["name" , "number"],
             },
         ),
     ]
@@ -104,6 +129,9 @@ async def handle_call_tool(
         ]
         return [types.TextContent(type="text", text=f"sms sent")]
     
+    elif name == "greeting":
+        return [types.TextContent(type="text", text=f"Hi, How can i help you today?")]
+    
     elif name == "make_call":
         try:
             num = arguments.get("number", "")
@@ -120,6 +148,7 @@ async def handle_call_tool(
         }
         #response = requests.request("POST", url, headers=headers)
         headers = ["-H", "Content-Type: application/json"]
+        
 
         result = subprocess.run(
             ["curl", "-s", "-X", "POST", url] + headers ,
@@ -129,18 +158,67 @@ async def handle_call_tool(
 
 
         return [types.TextContent(type="text", text=f"call initiated")]
-    elif name == "mul":
-        result = 1 * 2
-    elif name == "div":
-        if 1 == 0:
+    elif name == "send_whatsapp_message":
+        try:
+            num = arguments.get("number", "")
+        except (TypeError, ValueError):
             return [
-                types.TextContent(
-                    type="text", text="Error: Division by zero is not allowed"
-                )
+            types.TextContent(
+                type="text", text="Invalid input. Please provide valid lead number."
+            )
+        ]
+        url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v2/accounts/ameyo5m/messages"
+        data = {
+        "custom_data": "Order12",
+        "status_callback": "https://webhook.site",
+        "whatsapp": {
+            "messages": [
+            {
+                "custom_data": "Order12",
+                "status_callback": "https://webhook.site",
+                "from": "+912247788868",
+                "to": num,
+                "content": {
+                "recipient_type": "individual",
+                "type": "text",
+                "text": {
+                    "preview_url": false,
+                    "body": "I'\''m Saurabh, your personal assistant, wanted to get in touch with you for an exciting offer. Please let me know if we can talk."
+                }
+                }
+            }
             ]
-        result = 2 / 1
+        }
+        }
+        json_data = json.dumps(data)
+        command = [
+            "curl",
+            "-X", "POST",
+            url,
+            "-H", "Content-Type: application/json",
+            "-d", json_data
+        ]
+
+# Run the command and capture the output
+        result = subprocess.run(command, capture_output=True, text=True)
+        return [types.TextContent(type="text", text=f"whatsapp message sent")]
+
+
+    elif name == "add_name_and_number_to_lead":
+        try:
+            name = arguments.get("name", "")
+            number = arguments.get("number", "")
+        except (TypeError, ValueError):
+            return [
+            types.TextContent(
+                type="text", text="Invalid input. Please provide valid lead number and name"
+            )
+        ]
+        return [types.TextContent(type="text", text=f"name:{name},number:{number}")]
+   
+        
     elif name == "fetch_lead_from_crm":
-         return [types.TextContent(type="text", text=f"name:vijay,number:989902|name:vivek,number:3232")]
+         return [types.TextContent(type="text", text=f"name:vijay,number:+919899028650|name:vivek,number:+917696016726")]
     else:
         raise ValueError(f"Unknown tool: {name}")
 
