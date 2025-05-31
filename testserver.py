@@ -144,6 +144,7 @@ async def handle_call_tool(
     elif name == "send_whatsapp_message":
         try:
             number = arguments.get("number", "")
+            number = '+' + number.lstrip('+')
         except (TypeError, ValueError):
             return [
             types.TextContent(
