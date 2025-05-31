@@ -13,8 +13,8 @@ api_key="xxxx"
 mcp_client_config = config.MCPClientConfig(
     mcpServers={
         "calculator": config.MCPServerConfig(
-            command="uv",
-            args=["run", "testserver.py"],
+            command="python3",
+            args=[ "testserver.py"],
         )
         # add here other servers ...
     }
@@ -44,18 +44,15 @@ async def getclient():
         await client.cleanup()
   
 
-async def execute():
+async def execute(message):
     print("inside main")
     # Establish connection between the client and the server.
   
     # messages_in are coming from user interacting with the LLM
     # e.g. UI making use of this MCP client.
-    messages_in = [{"role": "user", "content": "Can you fetch the leads from crm?"}]
+    messages_in = [{"role": "user", "content": message}]
     print("printing message", messages_in)
 
-
-    
-    
     messages_out =""
     try:
         async with getclient() as client:
@@ -66,26 +63,6 @@ async def execute():
         print("Error while processing messages:", e)
     finally:
         print("Gracefully closed MCP client interaction.")
-
-
-
-    messages_in = [{"role": "user", "content": "Can you make a call to vijay?"}]
-    print("printing message", messages_in)
-
-
-    
-    
-    messages_out =""
-    try:
-        async with getclient() as client:
-        #await client.connect_to_server("calculator")
-            messages_out = await client.process_messages(messages_in)
-            print("MCP + OpenAI Response:", messages_out)
-    except Exception as e:
-        print("Error while processing messages:", e)
-    finally:
-        print("Gracefully closed MCP client interaction.")
-
     return messages_out
 
 
@@ -96,5 +73,3 @@ async def execute():
     # the available tools offered by the connected servers.
 
 
-if __name__ == "__main__":
-     asyncio.run(execute())
