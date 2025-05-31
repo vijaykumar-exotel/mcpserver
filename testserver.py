@@ -159,7 +159,8 @@ async def handle_call_tool(
             phone_vs_whatsapp_pref = {
                 "919899028650" : "yes",
                 "919845169200" : "yes",
-                "917696016726" : "no"
+                "917696016726" : "no",
+                "917411179773" : "yes"
             }
 
             if number not in phone_vs_whatsapp_pref:
@@ -233,7 +234,7 @@ async def handle_call_tool(
         
     elif name == "fetch_lead_from_crm":
          return [types.TextContent(type="text", 
-         text=f"name:vijay,number:+919899028650|name:vivek,number:+917696016726|name:maru,number:+919845169200")]
+         text=f"name:vijay,number:+919899028650|name:vivek,number:+917696016726|name:maru,number:+919845169200|name:saurabh,number:+917411179773")]
     else:
         raise ValueError(f"Unknown tool: {name}")
 
