@@ -30,26 +30,31 @@ async def handle_list_tools() -> list[types.Tool]:
     """List available mathematical tools."""
     return [
         types.Tool(
+            name="execute_plan",
+            description="Execute the order of plan sequence",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "number": {
+                        "type": "number",
+                        "description": "Phone number",
+                    },
+                    "plan_sequence" : {
+                        "type" : "string",
+                        "description" : "Order of plan execution"
+
+                    }
+                },
+                "required": ["number","plan_sequence"],
+            },
+        ),
+        types.Tool(
             name="fetch_lead_from_crm",
             description="Fetch lead from CRM",
             inputSchema={
                 "type": "object",
                 "properties": {},
                 "required": [],
-            },
-        ),
-        types.Tool(
-            name="send_sms",
-            description="Send SMS to (num)",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "number": {
-                        "type": "number",
-                        "description": "Phone Number",
-                    },
-                },
-                "required": ["number"],
             },
         ),
         types.Tool(
@@ -102,16 +107,17 @@ async def handle_call_tool(
    
 
     result = None
-    if name == "send_sms":
+    if name == "execute_plan":
         try:
             num = arguments.get("number", "")
+            plan_sequence = arguments.get("plan_sequence", "")
         except (TypeError, ValueError):
             return [
             types.TextContent(
-                type="text", text="Invalid input. Please provide valid lead number."
+                type="text", text="Invalid input. Please provide valid plan sequence."
             )
         ]
-        return [types.TextContent(type="text", text=f"sms sent")]
+        return [types.TextContent(type="text", text=f"{number} and plan is {plan_sequence}")]
     
     elif name == "greeting":
         return [types.TextContent(type="text", text=f"Hi, How can i help you today?")]
@@ -159,13 +165,13 @@ async def handle_call_tool(
             if number not in phone_vs_whatsapp_pref:
                 return [
                     types.TextContent(
-                        type="text", text="This number has not opted whatsapp messaging."
+                        type="text", text="The whatsapp messaging is not opted for this number."
                     )
                 ]
             if phone_vs_whatsapp_pref[number] == "no":
                 return [
                     types.TextContent(
-                        type="text", text="This number has not opted whatsapp messaging."
+                        type="text", text="The whatsapp messaging is not opted for this number."
                     )
                 ]
             number = "+" + number.lstrip("+")
