@@ -144,7 +144,8 @@ async def handle_call_tool(
     elif name == "send_whatsapp_message":
         number  = ""
         try:
-            number = arguments.get("number", "")
+            num = arguments.get("number", "")
+            number = str(num)
             number = "+" + number.lstrip("+")
         except (TypeError, ValueError):
             return [
