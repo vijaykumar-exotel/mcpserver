@@ -55,23 +55,23 @@ async def handle_list_tools() -> list[types.Tool]:
             inputSchema={
                 "type": "object",
                 "properties": {
-                    "a": {
+                    "number": {
                         "type": "number",
                         "description": "Phone number",
                     }
                 },
-                "required": ["a"],
+                "required": ["number"],
             },
         ),
         types.Tool(
             name="send_whatsapp_message",
-            description="Send Whatsapp Message on E164 format (number)",
+            description="Send Whatsapp Message  (number)",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "number": {
                         "type": "number",
-                        "description": "E164 Number",
+                        "description": "Number",
                     },
                     
                 },
