@@ -88,24 +88,6 @@ async def handle_list_tools() -> list[types.Tool]:
                 "required": [],
             },
         ),
-        types.Tool(
-            name="add_name_and_number_to_lead",
-            description="Add name and number to lead list",
-            inputSchema={
-                "type": "object",
-                "properties": {
-                    "name": {
-                        "type": "name",
-                        "description": "Name",
-                    },
-                    "number": {
-                        "type": "number",
-                        "description": "E164 Number",
-                    },
-                },
-                "required": ["name" , "number"],
-            },
-        ),
     ]
 
 
@@ -218,7 +200,8 @@ async def handle_call_tool(
    
         
     elif name == "fetch_lead_from_crm":
-         return [types.TextContent(type="text", text=f"name:vijay,number:+919899028650|name:vivek,number:+917696016726")]
+         return [types.TextContent(type="text", text=f"name:vijay,number:+919899028650|name:vivek,number:+917696016726|name:maru,number:+919845169200
+")]
     else:
         raise ValueError(f"Unknown tool: {name}")
 
