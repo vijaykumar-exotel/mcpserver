@@ -172,7 +172,7 @@ async def handle_call_tool(
             }
             ]
         }
-        }
+        
         json_data = json.dumps(data)
         command = [
             "curl",
