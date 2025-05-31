@@ -152,25 +152,26 @@ async def handle_call_tool(
         ]
         url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v2/accounts/ameyo5m/messages"
         data = {
-        "custom_data": "Order12",
-        "status_callback": "https://webhook.site",
-        "whatsapp": {
-            "messages": [
-            {
-                "custom_data": "Order12",
-                "status_callback": "https://webhook.site",
-                "from": "+912247788868",
-                "to": number,
-                "content": {
-                "recipient_type": "individual",
-                "type": "text",
-                "text": {
-                    "preview_url": false,
-                    "body": "I'\''m Saurabh, your personal assistant, wanted to get in touch with you for an exciting offer. Please let me know if we can talk."
-                }
-                }
+            "custom_data": "Order12",
+            "status_callback": "https://webhook.site",
+            "whatsapp": {
+                "messages": [
+                    {
+                        "custom_data": "Order12",
+                        "status_callback": "https://webhook.site",
+                        "from": "+912247788868",
+                        "to": number,
+                        "content": {
+                            "recipient_type": "individual",
+                            "type": "text",
+                            "text": {
+                                "preview_url": False,
+                                "body": "I'\''m Saurabh, your personal assistant, wanted to get in touch with you for an exciting offer. Please let me know if we can talk."
+                            }
+                        }
+                    }
+                ]
             }
-            ]
         }
         
         json_data = json.dumps(data)

@@ -1,5 +1,6 @@
 import requests
 import subprocess
+import json
 
 url = "https://api.in.exotel.com/v1/Accounts/ameyo5m/Sms/send.json"
 
@@ -60,11 +61,53 @@ headers = {
 data = '{"title":"foo","body":"bar","userId":1}'
 headers = ["-H", "Content-Type: application/json"]
 
-result = subprocess.run(
-    ["curl", "-s", "-X", "POST", url] + headers ,
-    capture_output=True,
-    text=True
-)
+#result = subprocess.run(
+#    ["curl", "-s", "-X", "POST", url] + headers ,
+#    capture_output=True,
+#    text=True
+#)
+
+#print(result.stdout)
+
+
+
+number = "+919899028650"
+url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v2/accounts/ameyo5m/messages"
+data = {
+    "custom_data": "Order12",
+    "status_callback": "https://webhook.site",
+    "whatsapp": {
+        "messages": [
+            {
+                "custom_data": "Order12",
+                "status_callback": "https://webhook.site",
+                "from": "+912247788868",
+                "to": number,
+                "content": {
+                    "recipient_type": "individual",
+                    "type": "text",
+                    "text": {
+                        "preview_url": False,
+                        "body": "I am Saurabh, your personal assistant, wanted to get in touch with you for an exciting offer. Please let me know if we can talk."
+                    }
+                }
+            }
+        ]
+    }
+}
+
+json_data = json.dumps(data)
+
+command = [
+    "curl",
+    "-X", "POST",
+    url,
+    "-H", "Content-Type: application/json",
+    "-d", json_data
+]
+
+
+# Run the command and capture the output
+result = subprocess.run(command, capture_output=True, text=True)
 
 print(result.stdout)
-
