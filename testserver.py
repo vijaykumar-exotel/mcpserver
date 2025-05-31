@@ -23,6 +23,12 @@ import json
 server = Server("calculator")
 
 
+phone_vs_whatsapp_pref : {
+    "919899028650" : "yes",
+    "919845169200" : "yes",
+    "917696016726" : "no"
+}
+
 @server.list_tools()
 async def handle_list_tools() -> list[types.Tool]:
     """List available mathematical tools."""
@@ -99,7 +105,6 @@ async def handle_call_tool(
     """Handle mathematical tool execution requests."""
    
 
-
     result = None
     if name == "send_sms":
         try:
@@ -148,13 +153,24 @@ async def handle_call_tool(
             number = str(num)
             if len(number) == 10:
                 number = "91" + number
+            if number not in phone_vs_whatsapp_pref:
+                return [
+                    types.TextContent(
+                        type="text", text="This number has not opted whatsapp messaging. You can call on this."
+                    )
+                ]
+            if phone_vs_whatsapp_pref[number] == "no":
+                return [
+                    types.TextContent(
+                        type="text", text="This number has not opted whatsapp messaging. You can call on this."
+                    )
+                ]
             number = "+" + number.lstrip("+")
         except (TypeError, ValueError):
             return [
             types.TextContent(
                 type="text", text="Invalid input. Please provide valid lead number."
-            )
-        ]
+            )]
         url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v2/accounts/ameyo5m/messages"
         data = {
             "custom_data": "Order12",
