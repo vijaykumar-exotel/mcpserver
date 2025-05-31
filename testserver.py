@@ -166,7 +166,7 @@ async def handle_call_tool(
                             "type": "text",
                             "text": {
                                 "preview_url": False,
-                                "body": "I'\''m Saurabh, your personal assistant, wanted to get in touch with you for an exciting offer. Please let me know if we can talk."
+                                "body": "I am Saurabh, your personal assistant, wanted to get in touch with you for an exciting offer. Please let me know if we can talk."
                             }
                         }
                     }
