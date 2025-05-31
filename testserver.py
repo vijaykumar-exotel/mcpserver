@@ -159,13 +159,13 @@ async def handle_call_tool(
             if number not in phone_vs_whatsapp_pref:
                 return [
                     types.TextContent(
-                        type="text", text="This number has not opted whatsapp messaging. You can call on this."
+                        type="text", text="This number has not opted whatsapp messaging."
                     )
                 ]
             if phone_vs_whatsapp_pref[number] == "no":
                 return [
                     types.TextContent(
-                        type="text", text="This number has not opted whatsapp messaging. You can call on this."
+                        type="text", text="This number has not opted whatsapp messaging."
                     )
                 ]
             number = "+" + number.lstrip("+")
