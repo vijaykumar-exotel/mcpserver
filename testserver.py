@@ -146,6 +146,8 @@ async def handle_call_tool(
         try:
             num = arguments.get("number", "")
             number = str(num)
+            if len(number) == 10:
+                number = "91" + number
             number = "+" + number.lstrip("+")
         except (TypeError, ValueError):
             return [
