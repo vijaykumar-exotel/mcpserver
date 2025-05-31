@@ -15,8 +15,6 @@ import mcp.server.stdio
 import mcp.types as types
 from mcp.server import NotificationOptions, Server
 from mcp.server.models import InitializationOptions
-import subprocess
-
 
 # Initialize the server
 server = Server("calculator")
@@ -31,36 +29,53 @@ async def handle_list_tools() -> list[types.Tool]:
             description="Fetch lead from CRM",
             inputSchema={
                 "type": "object",
-                "properties": {},
-                "required": [],
-            },
-        ),
-        types.Tool(
-            name="send_sms",
-            description="Send SMS to (num)",
-            inputSchema={
-                "type": "object",
                 "properties": {
-                    "number": {
+                    "a": {
                         "type": "number",
-                        "description": "Phone Number",
+                        "description": "First number",
+                    },
+                    "b": {
+                        "type": "number",
+                        "description": "Second number",
                     },
                 },
-                "required": ["number"],
+                "required": ["a", "b"],
             },
         ),
         types.Tool(
-            name="make_call",
-            description="Make call to number (num)",
+            name="sub",
+            description="Subtract second number from first number (-)",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "a": {
                         "type": "number",
-                        "description": "Phone number",
-                    }
+                        "description": "First number",
+                    },
+                    "b": {
+                        "type": "number",
+                        "description": "Second number",
+                    },
                 },
-                "required": ["a"],
+                "required": ["a", "b"],
+            },
+        ),
+        types.Tool(
+            name="mul",
+            description="Multiply two numbers (*)",
+            inputSchema={
+                "type": "object",
+                "properties": {
+                    "a": {
+                        "type": "number",
+                        "description": "First number",
+                    },
+                    "b": {
+                        "type": "number",
+                        "description": "Second number",
+                    },
+                },
+                "required": ["a", "b"],
             },
         ),
         types.Tool(
@@ -89,58 +104,34 @@ async def handle_call_tool(
     name: str, arguments: dict | None
 ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
     """Handle mathematical tool execution requests."""
-   
+    if not arguments:
+        raise ValueError("Missing arguments")
 
+    try:
+        a = float(arguments.get("a", 0))
+        b = float(arguments.get("b", 0))
+    except (TypeError, ValueError):
+        return [
+            types.TextContent(
+                type="text", text="Invalid input. Please provide valid numbers."
+            )
+        ]
 
     result = None
-    if name == "send_sms":
-        try:
-            num = arguments.get("number", "")
-        except (TypeError, ValueError):
-            return [
-            types.TextContent(
-                type="text", text="Invalid input. Please provide valid lead number."
-            )
-        ]
-        return [types.TextContent(type="text", text=f"sms sent")]
-    
-    elif name == "make_call":
-        try:
-            num = arguments.get("number", "")
-        except (TypeError, ValueError):
-            return [
-            types.TextContent(
-                type="text", text="Invalid input. Please provide valid lead number."
-            )
-        ]
-        url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v1/Accounts/ameyo5m/Calls/connect.json?From=09899028650&Url=http://my.in.exotel.com/ameyo5m/exoml/start_voice/24049&CallerId=02247788868"
-        headers = {
-            'Authorization': 'Basic e3tBdXRoS2V5fX06e3tBdXRoVG9rZW59fQ==',
-            'Content-Type' : 'application/json'
-        }
-        #response = requests.request("POST", url, headers=headers)
-        headers = ["-H", "Content-Type: application/json"]
-
-        result = subprocess.run(
-            ["curl", "-s", "-X", "POST", url] + headers ,
-            capture_output=True,
-            text=True
-        )
-
-
-        return [types.TextContent(type="text", text=f"call initiated")]
+    if name == "add":
+        result = a + b + 5
+    elif name == "sub":
+        result = a - b
     elif name == "mul":
-        result = 1 * 2
+        result = a * b
     elif name == "div":
-        if 1 == 0:
+        if b == 0:
             return [
                 types.TextContent(
                     type="text", text="Error: Division by zero is not allowed"
                 )
             ]
-        result = 2 / 1
-    elif name == "fetch_lead_from_crm":
-         return [types.TextContent(type="text", text=f"name:vijay,number:989902|name:vivek,number:3232")]
+        result = a / b
     else:
         raise ValueError(f"Unknown tool: {name}")
 

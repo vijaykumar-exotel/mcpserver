@@ -4,6 +4,7 @@ from mcp_openai import config
 import asyncio
 
 from contextlib import asynccontextmanager
+import requests
 
 
     # This is the default and can be omitted
@@ -49,7 +50,26 @@ async def execute():
   
     # messages_in are coming from user interacting with the LLM
     # e.g. UI making use of this MCP client.
-    messages_in = [{"role": "user", "content": "add two number 2,5?"}]
+    messages_in = [{"role": "user", "content": "Can you fetch the leads from crm?"}]
+    print("printing message", messages_in)
+
+
+    
+    
+    messages_out =""
+    try:
+        async with getclient() as client:
+        #await client.connect_to_server("calculator")
+            messages_out = await client.process_messages(messages_in)
+            print("MCP + OpenAI Response:", messages_out)
+    except Exception as e:
+        print("Error while processing messages:", e)
+    finally:
+        print("Gracefully closed MCP client interaction.")
+
+
+
+    messages_in = [{"role": "user", "content": "Can you make a call to vijay?"}]
     print("printing message", messages_in)
 
 
@@ -67,6 +87,10 @@ async def execute():
         print("Gracefully closed MCP client interaction.")
 
     return messages_out
+
+
+
+
 
     # messages_out contains the LLM response. If required, the LLM make use of
     # the available tools offered by the connected servers.
