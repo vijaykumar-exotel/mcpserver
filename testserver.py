@@ -116,14 +116,14 @@ async def handle_call_tool(
     
     elif name == "make_call":
         try:
-            num = arguments.get("number", "")
+            number = arguments.get("number", "")
         except (TypeError, ValueError):
             return [
             types.TextContent(
                 type="text", text="Invalid input. Please provide valid lead number."
             )
         ]
-        url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v1/Accounts/ameyo5m/Calls/connect.json?From=09899028650&Url=http://my.in.exotel.com/ameyo5m/exoml/start_voice/24049&CallerId=02247788868"
+        url = f"https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v1/Accounts/ameyo5m/Calls/connect.json?From={number}&Url=http://my.in.exotel.com/ameyo5m/exoml/start_voice/24049&CallerId=02247788868"
         headers = {
             'Authorization': 'Basic e3tBdXRoS2V5fX06e3tBdXRoVG9rZW59fQ==',
             'Content-Type' : 'application/json'
@@ -139,10 +139,10 @@ async def handle_call_tool(
         )
 
 
-        return [types.TextContent(type="text", text=f"call initiated")]
+        return [types.TextContent(type="text", text=f"call initiated to {number}")]
     elif name == "send_whatsapp_message":
         try:
-            num = arguments.get("number", "")
+            number = arguments.get("number", "")
         except (TypeError, ValueError):
             return [
             types.TextContent(
@@ -159,7 +159,7 @@ async def handle_call_tool(
                 "custom_data": "Order12",
                 "status_callback": "https://webhook.site",
                 "from": "+912247788868",
-                "to": num,
+                "to": number,
                 "content": {
                 "recipient_type": "individual",
                 "type": "text",
@@ -183,7 +183,7 @@ async def handle_call_tool(
 
 # Run the command and capture the output
         result = subprocess.run(command, capture_output=True, text=True)
-        return [types.TextContent(type="text", text=f"whatsapp message sent")]
+        return [types.TextContent(type="text", text=f"whatsapp message sent to {number}")]
 
 
     elif name == "add_name_and_number_to_lead":
