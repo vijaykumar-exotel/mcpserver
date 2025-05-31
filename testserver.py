@@ -16,6 +16,7 @@ import mcp.types as types
 from mcp.server import NotificationOptions, Server
 from mcp.server.models import InitializationOptions
 import subprocess
+import json
 
 
 # Initialize the server
