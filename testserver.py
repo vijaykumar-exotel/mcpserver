@@ -150,7 +150,7 @@ async def handle_call_tool(
             if len(number) == 10:
                 number = "91" + number
 
-            phone_vs_whatsapp_pref : {
+            phone_vs_whatsapp_pref = {
                 "919899028650" : "yes",
                 "919845169200" : "yes",
                 "917696016726" : "no"
@@ -172,7 +172,7 @@ async def handle_call_tool(
         except (TypeError, ValueError):
             return [
             types.TextContent(
-                type="text", text="Invalid input. Please provide valid lead number."
+                type="text", text="Invalid input. Please provide valid number."
             )]
         url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v2/accounts/ameyo5m/messages"
         data = {
