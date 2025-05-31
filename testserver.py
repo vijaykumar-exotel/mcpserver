@@ -116,6 +116,7 @@ async def handle_call_tool(
         return [types.TextContent(type="text", text=f"Hi, How can i help you today?")]
     
     elif name == "make_call":
+        number = ""
         try:
             number = arguments.get("number", "")
         except (TypeError, ValueError):
@@ -138,13 +139,13 @@ async def handle_call_tool(
             capture_output=True,
             text=True
         )
-
-
         return [types.TextContent(type="text", text=f"call initiated to {number}")]
+    
     elif name == "send_whatsapp_message":
+        number  = ""
         try:
             number = arguments.get("number", "")
-            number = '+' + number.lstrip('+')
+            number = "+" + number.lstrip("+")
         except (TypeError, ValueError):
             return [
             types.TextContent(
@@ -184,8 +185,8 @@ async def handle_call_tool(
             "-d", json_data
         ]
 
-# Run the command and capture the output
         result = subprocess.run(command, capture_output=True, text=True)
+        print(result.stdout)
         return [types.TextContent(type="text", text=f"whatsapp message sent to {number}")]
 
 

@@ -71,7 +71,8 @@ headers = ["-H", "Content-Type: application/json"]
 
 
 
-number = "+919899028650"
+number = "919899028650"
+number = '+' + number.lstrip('+')
 url = "https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v2/accounts/ameyo5m/messages"
 data = {
     "custom_data": "Order12",
