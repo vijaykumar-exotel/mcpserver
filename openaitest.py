@@ -8,7 +8,7 @@ import requests
 
 
     # This is the default and can be omitted
-api_key="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"
+api_key="xxxx"
 
 mcp_client_config = config.MCPClientConfig(
     mcpServers={
@@ -95,14 +95,6 @@ async def execute():
     # messages_out contains the LLM response. If required, the LLM make use of
     # the available tools offered by the connected servers.
 
-
-def main():
-    try:
-        asyncio.run(execute())
-    except KeyboardInterrupt:
-        print("Interrupted by user.")
-    except Exception as e:
-        print("Unexpected error:", e)
 
 if __name__ == "__main__":
      asyncio.run(execute())

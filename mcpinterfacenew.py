@@ -6,7 +6,7 @@ app = FastAPI()
 @app.get("/prompt")
 async def read_item(q: str | None = None):
     if q:
-        data = await openaitest.newfunc()
+        data = await openaitest.execute()
         return {"status": "sucess", "data": data}
     return {"status": "failed"}
 
