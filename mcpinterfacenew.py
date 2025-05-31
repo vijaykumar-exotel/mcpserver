@@ -23,7 +23,7 @@ async def read_item(q: str | None = None):
 @app.get("/call")
 async def read_item(q: str | None = None):
     number = "07411179773"
-    url = f"https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v1/Accounts/ameyo5m/Calls/connect.json?From={number}&Url=http://my.in.exotel.com/ameyo5m/exoml/start_voice/24049&CallerId=02247788868"
+    url = f"https://399117e47411d9f0f9120de1181323056e55b88c664d2f67:80711a9d4562955dc3591f1ada24790f3b5088dbaa3263db@api.in.exotel.com/v1/Accounts/ameyo5m/Calls/connect.json?From=sip:saurabhsf258cafa&To={number}&CallerId=02247788868"
     headers = {
         'Authorization': 'Basic e3tBdXRoS2V5fX06e3tBdXRoVG9rZW59fQ==',
         'Content-Type' : 'application/json'
